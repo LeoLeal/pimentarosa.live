@@ -11,7 +11,7 @@ const authLink = setContext((_, { headers }) => {
     headers: {
       ...headers,
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${import.meta.env.CONTENTFUL_PREVIEW_TOKEN}`
+      'Authorization': `Bearer ${import.meta.env.CONTENTFUL_DELIVERY_TOKEN}`
     }
   }
 });

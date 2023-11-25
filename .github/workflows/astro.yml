@@ -30,8 +30,13 @@ env:
 
 jobs:
   build:
+    environment: github-pages
     name: Build
     runs-on: ubuntu-latest
+    env:
+      CONTENTFUL_GRAPHQL_ENDPOINT: ${{ vars.CONTENTFUL_GRAPHQL_ENDPOINT }}
+      CONTENTFUL_LOCALES_ENDPOINT: ${{ vars.CONTENTFUL_LOCALES_ENDPOINT }}
+      CONTENTFUL_DELIVERY_TOKEN: ${{ secrets.CONTENTFUL_DELIVERY_TOKEN }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -55,7 +60,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: "16"
+          node-version: "18"
           cache: ${{ steps.detect-package-manager.outputs.manager }}
           cache-dependency-path: ${{ env.BUILD_PATH }}/package-lock.json
       - name: Setup Pages
@@ -64,6 +69,11 @@ jobs:
       - name: Install dependencies
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
         working-directory: ${{ env.BUILD_PATH }}
+      - name: Variables
+        run: |
+          echo "CONTENTFUL_GRAPHQL_ENDPOINT variable : $CONTENTFUL_GRAPHQL_ENDPOINT"
+          echo "CONTENTFUL_LOCALES_ENDPOINT variable : $CONTENTFUL_LOCALES_ENDPOINT"
+          echo "CONTENTFUL_DELIVERY_TOKEN variable : $CONTENTFUL_DELIVERY_TOKEN"
       - name: Build with Astro
         run: |
           ${{ steps.detect-package-manager.outputs.runner }} astro build \

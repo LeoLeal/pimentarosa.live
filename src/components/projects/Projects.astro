@@ -1,0 +1,137 @@
+---
+interface Props {
+  [index: string]: any;
+}
+
+const { items } = Astro.props['projectsCollection'];
+const projects = [...items].reverse();
+---
+
+<section class="parallax-section" id={Astro.props['__typename']}>
+  <section class="eventos">
+    <h2 set:html={Astro.props['title']} />
+    <ol>
+      {
+        projects.map(project => (
+          <li>
+            <figure>
+              <img src={project.image.url} alt={project.image.description} title={project.image.title} />
+              <figcaption>{project.title}</figcaption>
+            </figure>
+            <p>{project.role}</p>
+            <p><i class="material-icons">event</i>{project.dateDescription}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+</section>
+
+<style>
+  section.eventos {
+    position: relative;
+    overflow: hidden;
+    padding: 3em 1.5em;
+    padding-bottom: 4em;
+    color: #fff;
+    background: linear-gradient(to right top, #051937, #004d7a, #008793, #00bf72, #a8eb12);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    min-height: 100vh;
+  }
+
+  section.eventos > h2 {
+    text-shadow: 2px 2px 0 #00000088;
+  }
+
+  section.eventos > ol {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0;
+    margin-top: 3em;
+    padding: 0;
+    flex-grow: 1;
+    gap: 1.5em;
+    align-items: flex-start;
+    align-content: flex-start;
+    justify-content: center;
+    list-style-type: none;
+    color: #333;
+  }
+
+  section.eventos > ol li {
+    display: block;
+    flex: 0 0 24em;
+    list-style-type: none;
+    background: #fff;
+    border-radius: 0.5em;
+    box-shadow: 1px 1px 0.5em rgb(0 0 0 / 10%);
+    padding-bottom: 0.5em;
+    transform: scale(100%);
+    transition: all 0.125s ease-out;
+  }
+
+  section.eventos > ol li:hover {
+    transform: scale(102%);
+    box-shadow: 3px 3px 1em rgb(0 0 0 / 10%);
+    z-index: 1;
+  }
+
+  section.eventos > ol figure {
+    display: flex;
+    flex-direction: column;
+  }
+
+  section.eventos > ol figure figcaption {
+    font-weight: 600;
+    font-size: 1.5em;
+    line-height: 1;
+    padding: 0.5em 1rem 0.25rem;
+    text-align: left;
+  }
+
+  section.eventos > ol figure img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    border-radius: 0.5em 0.5em 0 0;
+  }
+
+  section.eventos > ol li p {
+    text-align: left;
+    padding: 0 1rem;
+    font-size: 0.875em;
+  }
+
+  section.eventos > ol li i {
+    vertical-align: sub;
+    display: inline-block;
+    margin-right: 0.15em;
+  }
+
+  @media screen and (max-width: 1190px) {
+    section.eventos > ol li {
+      flex: 0 0 14em;
+    }
+
+    section.eventos > ol li:hover {
+      transform: scale(100%);
+      box-shadow: 1px 1px 0.5em rgb(0 0 0 / 10%);
+    }
+
+    section.eventos > ol li figcaption {
+      font-size: 1.1em;
+    }
+    section.eventos > ol li p {
+      font-size: 0.8em;
+    }
+  }
+
+  @media screen and (max-width: 736px) {
+    section.eventos > ol li {
+      flex: 0 0 100%;
+    }
+  }
+</style>

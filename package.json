@@ -1,0 +1,17 @@
+{
+  "name": "pimentarosa.live",
+  "type": "module",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@apollo/client": "^3.8.7",
+    "@contentful/rich-text-html-renderer": "^16.3.0",
+    "astro": "^3.5.5"
+  }
+}

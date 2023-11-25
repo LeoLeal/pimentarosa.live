@@ -1,0 +1,93 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navigation from '../components/Navigation.astro';
+import client from '../lib/graphql';
+import { pageQuery, pathsQuery } from './query';
+import getLocales from '../lib/locales';
+import PageHero from '../components/page-hero/PageHero.astro';
+import SocialMedia from '../components/social-media/SocialMedia.astro';
+import Projects from '../components/projects/Projects.astro';
+import Contact from '../components/contact/Contact.astro';
+
+export async function getStaticPaths() {
+  const pathsResponse = await client.query({
+    variables: {},
+    query: pathsQuery,
+  });
+  const paths = pathsResponse.data.commonPageCollection.items.map(
+    (path) => path.path
+  );
+  const { items: responseLocales } = await getLocales();
+  const staticPaths = responseLocales.flatMap((locale) =>
+    paths.flatMap((path) => [
+      {
+        params: {
+          slug: locale.default
+            ? path === '/'
+              ? undefined
+              : path
+            : path === '/'
+            ? locale.code
+            : `${path}/${locale.code}`,
+        },
+        props: { locale: locale.code, path },
+      },
+    ])
+  );
+
+  return staticPaths;
+}
+
+const { data: pageQueryResults } = await client.query({
+  variables: {
+    locale: Astro.props['locale'],
+    path: Astro.props['path'],
+  },
+  query: pageQuery,
+});
+
+const { metadata, sectionsCollection } =
+  pageQueryResults.commonPageCollection.items[0];
+
+const sections = sectionsCollection.items;
+---
+
+<Layout {...metadata} locale={Astro.props['locale']}>
+  <Navigation sections={sections} />
+  <main class="parallax-container">
+    {
+      sections.map((section, index) => {
+        switch (section['__typename']) {
+          case 'PimentarosaLiveSectionPageHero':
+            return <PageHero {...section} />;
+          case 'PimentarosaLiveSectionSocialMedia':
+            return <SocialMedia {...section} />;
+          case 'PimentarosaLiveSectionProjects':
+            return <Projects {...section} />;
+          case 'PimentarosaLiveSectionContact':
+            return <Contact {...section} />;
+          default:
+            console.log(section['__typename']);
+            return <section class="parallax-section">NYI</section>;
+        }
+      })
+    }
+  </main>
+</Layout>
+
+<style>
+  .parallax-container {
+    height: 100vh;
+    width: 100vw;
+    overflow-y: auto;
+    overflow-x: hidden;
+    perspective: 10px;
+  }
+</style>
+
+<style is:global>
+  main > section {
+    min-height: 100vh;
+    background: #fff;
+  }
+</style>

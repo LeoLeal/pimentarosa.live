@@ -1,0 +1,68 @@
+---
+import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
+
+interface Props {
+  [index: string]: any;
+}
+---
+
+<section
+  class="parallax-section"
+  style={`--background-image: url(${Astro.props['backgroundImage']['url']})`}
+  id={Astro.props['__typename']}
+>
+  <h2 set:html={Astro.props['title']} />
+  <div
+    set:html={documentToHtmlString(Astro.props['text']['json'], {
+        preserveWhitespace: true
+    })}
+  />
+</section>
+
+<style is:inline>
+  /**
+    Elements dynamically added with Fragment are not targetted by scoped styles.
+    Use only absolutelly necessary CSS rules for these here, as they have the 
+    risk to bleed to the rest of the document.
+  */
+  #PimentarosaLiveSectionContact a {
+    color: #fff;
+    font-size: 1.3em;
+  }
+</style>
+
+<style>
+  section {
+    position: relative;
+    background: var(--background-image) center center no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    padding: 3em;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  h2 {
+    text-shadow: 2px 2px 0 #00000088;
+    margin-bottom: 0.25em;
+  }
+
+  div {
+    background: #00000066;
+    text-align: center;
+    padding: 3em;
+  }
+
+  @media screen and (max-width: 1024px) {
+    section {
+      background-position: 20%;
+    }
+
+    div {
+      padding: 2em;
+    }
+  }
+</style>

@@ -1,0 +1,111 @@
+---
+interface Props {
+  sections: { [key: string]: any }[];
+}
+---
+
+<script>
+  function selectNavigationItem(anchorName) {
+    document.querySelectorAll(`nav > a`).forEach((item) => {
+      item.classList.remove('selected');
+    });
+    document.querySelector(`nav > a.${anchorName}`).classList.add('selected');
+  }
+
+  function initNavigation() {
+    const intersectionHandler = (entries) => {
+      entries.forEach((item) => {
+        if (item.isIntersecting) {
+          selectNavigationItem(item.target.getAttribute('id'));
+        }
+      });
+    };
+
+    const instersectionObserver = new IntersectionObserver(
+      intersectionHandler,
+      {
+        root: document.querySelector('.parallax-container'),
+        threshold: 0.5,
+      }
+    );
+
+    const targets = document.querySelectorAll('.parallax-container > [id]');
+
+    targets.forEach((item) => {
+      instersectionObserver.observe(item);
+    });
+  }
+
+  window['goTo'] = function goTo(anchorName) {
+    document.querySelector(`#${anchorName}`).scrollIntoView({
+      behavior: 'smooth',
+    });
+  };
+
+  window.onload = function () {
+    initNavigation();
+  };
+</script>
+<nav aria-label="Principal">
+  {
+    Astro.props['sections'].map((section) => (
+      <a
+        href={`javascript:goTo('${section['__typename']}')`}
+        title={section['title']}
+        class={section['__typename']}
+      >
+        {section['title']}
+      </a>
+    ))
+  }
+</nav>
+<style>
+  nav {
+    position: fixed;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+    width: 24px;
+    z-index: 99;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  nav > a {
+    display: block;
+    width: 12px;
+    height: 12px;
+    color: transparent;
+    overflow: hidden;
+    border-radius: 50%;
+    margin: 4px;
+    border: 0px solid rgba(0, 0, 0, 0);
+    background: #fff;
+    transition: all 0.125s ease-in;
+    box-sizing: content-box;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
+  }
+
+  nav > a:hover {
+    background: #000;
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+    outline: none;
+  }
+
+  nav > a:active,
+  nav > a.selected {
+    width: 16px;
+    height: 16px;
+    background: #e40e5a;
+    border: 3px solid rgba(0, 0, 0, 1);
+  }
+
+  @media screen and (hover: none) {
+    nav {
+      right: 8px;
+    }
+  }
+</style>

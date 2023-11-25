@@ -1,0 +1,262 @@
+---
+import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
+interface Props {
+  [index: string]: any;
+}
+
+const sectionId = Astro.props['__typename'];
+const socialMediaCollection = Astro.props['socialMediaCollection'].items;
+const primaryLabel = Astro.props['primaryLabel'];
+const demographicsLabel = Astro.props['demographicsLabel'];
+---
+
+<script>
+  window['selectSocial'] = function selectSocial(container, socialNetwork, e) {
+    e.preventDefault();
+    document.querySelector(`section[id=${container}] div.selected`).classList.remove('selected');
+    document.querySelector(`section[id=${container}] div[id="${socialNetwork}"]`).classList.add('selected');
+    window['goTo'](container);
+  }
+</script>
+
+<section id={sectionId}>
+  <nav>
+    {
+      socialMediaCollection.map(socialMedia => (
+        <a 
+          target="_blank" 
+          aria-label={socialMedia.name} 
+          onclick={`selectSocial('${sectionId}', '${socialMedia.name}', event)`} 
+          style={`--background: ${socialMedia.background}`} href={`${socialMedia.url}`}
+        >
+          {socialMedia.primary ? <span>{primaryLabel}</span> : null}
+          <img src={`${socialMedia.logo.url}`} alt={`${socialMedia.logo.title}`} />
+        </a>
+      ))
+    }
+  </nav>
+  {
+    socialMediaCollection.map(socialMedia => (
+      <div id={socialMedia.name} class={socialMedia.primary ? 'selected' : ''} style={`--background: ${socialMedia.background}`}>
+        <h2>
+          {socialMedia.eyebrowText ? <sup>{socialMedia.eyebrowText}</sup> : null}
+          <a href={socialMedia.url} target="_blank">{socialMedia.url.replace(/^https?:\/\//, '')}</a>
+        </h2>
+        {socialMedia?.description?.json 
+          ? (
+            <section class="text" set:html={documentToHtmlString(socialMedia.description?.json)} />
+          )
+          : null}
+        <section class="stats">
+          {
+            socialMedia?.statsCollection?.items?.map?.(stat => (
+              <figure>
+                <label>{stat.label}:</label>
+                {stat.value}{stat.unit}
+              </figure>
+            ))
+          }
+          {socialMedia?.demographicsCollection?.items?.length
+            ? (
+              <div class="full-width">
+                <h3>{demographicsLabel}</h3>
+                {
+                  socialMedia?.demographicsCollection?.items?.map?.(demographic => (
+                    <figure>
+                      <label>{demographic.label}:</label>
+                      {
+                        demographic.percentagesCollection.items.map(percentage => (
+                          <div>{percentage.label}: {Math.round(percentage.percentage * 100)}%</div>
+                        ))
+                      }
+                    </figure>
+                  ))
+                }
+              </div>
+            )
+            : null
+          }
+        </section>
+      </div>
+    ))
+  }
+</section>
+
+<style>
+  section[id] {
+    --democolumns: 3;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    min-height: 100vh;
+  }
+  @media screen and (max-width: 1550px) {
+    section[id] {
+      --democolumns: 2;
+    }
+  }
+  @media screen and (max-width: 768px) {
+    section[id] {
+      --democolumns: 1;
+    }
+  }
+
+  /* NAVIGATION BAR */
+  nav {
+    display: flex;
+    min-height: 0;
+    height: 13vw;
+  }
+
+  nav a {
+    background: var(--background);
+  }
+
+  nav a span {
+    font-family: "Saira Condensed", sans-serif;
+    font-weight: 400;
+    font-size: 1vw;
+    margin-top: -1vw;
+  }
+
+  nav > a:not([name]) {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 20%;
+    transition: flex-basis 0.25s ease-out;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: #fff;
+    font-size: 350%;
+    font-family: "Oleo Script", cursive;
+    padding: 0;
+  }
+
+  nav > a:hover {
+    flex-basis: 25%;
+  }
+
+  /* CONTENT BLOCK */
+  section[id] > div {
+    flex: 1 1 auto;
+    flex-flow: column;
+    display: none;
+    color: #fff;
+    background: var(--background)
+  }
+
+  section[id] > div.selected {
+    display: flex;
+  }
+
+  div h2 {
+    margin: max(2vw, 1.5rem);
+    text-align: left;
+    font-weight: 400;
+    line-height: initial;
+  }
+
+  div h3 {
+    text-align: left;
+    font-weight: 400;
+    line-height: initial;
+  }
+
+  h2 a {
+    display: inline-block;
+    margin: 0;
+    font-size: max(4vw, 2rem);
+    color: #fff;
+    text-decoration: none;
+  }
+
+  h2 a:hover {
+    text-decoration: underline;
+  }
+
+  h2 sup {
+    display: block;
+    font-size: max(1.5vw, 1rem);
+    margin: 0;
+    margin-bottom: min(-1.5vw, -1rem);
+  }
+
+  h2 img {
+    width: max(1.5vw, 1rem);
+    vertical-align: -0.1em;
+  }
+
+  .text {
+    margin: min(-2vw, -1.5rem) max(2vw, 1.5rem) max(2vw, 1.5rem);
+  }
+
+  /* STATS */
+  .stats {
+    --columns: 5;
+    display: grid;
+    grid-template-columns: repeat(var(--columns), 1fr);
+    flex: 0 0 auto;
+    padding: max(2vw, 1.5rem);
+    padding-top: 0;
+    gap: max(2vw, 1.5rem);
+  }
+
+  @media screen and (max-width: 1550px) {
+    .stats {
+      --columns: 3;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    .stats {
+      --columns: 2;
+    }
+  }
+
+  .stats figure {
+    display: block;
+    color: #fff;
+    font-size: max(3.5vw, 2rem);
+    text-align: center;
+    background: #ffffff22;
+    border-radius: 0.5rem;
+    padding: 0.75rem 0;
+  }
+
+  .stats figure > label {
+    font-size: max(1.75vw, 1.1rem);
+    display: block;
+  }
+
+  div.full-width {
+    grid-column: 1 / span var(--columns);
+    display: grid;
+    grid-template-columns: repeat(var(--democolumns), 1fr);
+    grid-template-rows: auto 1fr;
+    flex: 0 0 auto;
+    padding: 0;
+    gap: max(2vw, 1.5rem);
+    row-gap: 1rem;
+  }
+
+  div.full-width h3 {
+    grid-column: 1 / span var(--democolumns);
+    grid-row: 1;
+  }
+
+  div.full-width figure {
+    font-size: max(1.25vw, 1rem);
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  div.full-width figure label {
+    font-size: max(1.5vw, 1.25rem);
+    grid-column: 1 / span 2;
+  }
+
+  section[id] a img {
+    width: 40%;
+  }
+</style>

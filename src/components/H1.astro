@@ -1,0 +1,29 @@
+---
+interface Props {
+  text: string
+}
+---
+<h1 data-text={await Astro.props.text}>{Astro.props.text}</h1>
+<style>
+  h1 {
+    font-family: "Oleo Script", cursive;
+    margin: 0;
+    line-height: 1em;
+    letter-spacing: -0.025em;
+    color: #000;
+    -webkit-text-stroke: 0.15em #000;
+    font-size: clamp(1rem, 14vw, 6rem);
+    margin-bottom: 0;
+    text-align: center;
+  }
+
+  h1::before {
+    position: absolute;
+    display: inline-block;
+    content: attr(data-text);
+    color: #e40e5a;
+    height: 1em;
+    -webkit-text-stroke: 0;
+    text-align: center;
+  }
+</style>

@@ -1,0 +1,251 @@
+---
+import { BLOCKS } from '@contentful/rich-text-types';
+import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
+import H1 from '../H1.astro';
+
+interface Props {
+  [index: string]: any;
+}
+---
+
+<header class="parallax-section" id={Astro.props["__typename"]}>
+  <img
+    src={Astro.props["background"]["url"]}
+    class="bg-parallax"
+    alt={Astro.props["background"]["description"]}
+  />
+  <div class="bg-parallax content">
+    <div class="container">
+      <img src="/images/pimenta.svg" class="logo" alt="Logotipo" />
+      <H1 text="Pimentarosa" />
+      <p class="subtitle">{Astro.props["title"]}</p>
+      <Fragment
+        set:html={documentToHtmlString(Astro.props["text"]["json"], {
+          preserveWhitespace: true,
+          renderNode: {
+            [BLOCKS.PARAGRAPH]: (node, next) =>
+              `<p class="about">${next(node.content)}</p>`,
+          },
+        })}
+      />
+    </div>
+  </div>
+  <div class="veja-mais" aria-hidden="true">
+    <a
+      href="javascript: goTo('PimentarosaLiveSectionSocialMedia');"
+      title={Astro.props["readMoreLabel"]}>{Astro.props["readMoreLabel"]}</a
+    >
+  </div>
+  <div id="arrowAnim" aria-hidden="true">
+    <div class="arrowSliding">
+      <div class="arrow"></div>
+    </div>
+    <div class="arrowSliding delay1">
+      <div class="arrow"></div>
+    </div>
+    <div class="arrowSliding delay2">
+      <div class="arrow"></div>
+    </div>
+    <div class="arrowSliding delay3">
+      <div class="arrow"></div>
+    </div>
+  </div>
+</header>
+
+<style is:inline>
+  /**
+    Elements dynamically added with Fragment are not targetted by scoped styles.
+    Use only extremely high specificity CSS rules here, as they have the risk to 
+    bleed to the rest of the document.
+  */
+  #PimentarosaLiveSectionPageHero p.about {
+    min-width: 19em;
+    margin-top: 2em;
+    color: #fff;
+    font-size: 1.2em;
+    font-weight: 200;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+  }
+
+  #PimentarosaLiveSectionPageHero p.about + p {
+    margin-top: 1em;
+  }
+
+  @media screen and (max-width: 768px) {
+    #PimentarosaLiveSectionPageHero p.about {
+      width: 75vw;
+      min-width: 0;
+      font-size: 0.9em;
+    }
+  }
+</style>
+
+<style>
+  .parallax-section {
+    position: relative;
+    transform-style: preserve-3d;
+    z-index: -1;
+  }
+
+  .bg-parallax {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    transform: translateZ(-10px) scale(2.1);
+    z-index: -1;
+  }
+
+  .bg-parallax + .bg-parallax {
+    transform: translateZ(-5px) scale(1.5);
+    z-index: -1;
+  }
+
+  header,
+  div.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100%;
+  }
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 50vw;
+    margin-right: 0;
+  }
+
+  .logo {
+    width: 400px;
+    max-width: 57vw;
+    margin-top: 2em;
+  }
+
+  p.subtitle {
+    font-size: 1.5em;
+    color: #fff;
+    text-shadow: 2px 2px 0 #000;
+    width: max-content;
+    max-width: 85vw;
+    background: #00000066;
+    text-align: center;
+    padding: 0 0.5em;
+  }
+
+  div.veja-mais {
+    color: #fff;
+    text-shadow: 2px 2px 0 #000;
+    position: absolute;
+    bottom: 0;
+    transform: translateX(0.5em);
+  }
+
+  div.veja-mais a {
+    color: #fff;
+    text-decoration: none;
+  }
+
+  div.veja-mais a:hover {
+    text-decoration: underline;
+  }
+
+  @media screen and (max-width: 900px) {
+    p.subtitle {
+      font-size: 1.2em;
+      padding: 0 0.3em;
+    }
+  }
+
+  @media screen and (max-width: 600px) {
+    .container {
+      width: 80vw;
+      margin-right: 0;
+    }
+
+    .logo {
+      width: 10em;
+      max-width: 80vw;
+      margin-top: 0em;
+    }
+
+    h1 {
+      font-size: 2.5em;
+    }
+    
+    p.subtitle {
+      font-size: 0.9em;
+      padding: 0 0.3em;
+    }
+  }
+
+  #arrowAnim {
+    width: 0.875em;
+    height: 0.875em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: rotate(-90deg) translateY(-220%);
+    position: absolute;
+    bottom: 0.66em;
+  }
+
+  @media screen and (max-width: 768px) {
+    div.veja-mais {
+      display: none;
+    }
+    #arrowAnim {
+      transform: rotate(-90deg) translateY(3%);
+    }
+  }
+
+  .arrow {
+    width: 0.875em;
+    height: 0.875em;
+    border: 0.15em solid;
+    border-color: white transparent transparent white;
+    transform: rotate(-45deg);
+    opacity: 1;
+  }
+
+  .arrowSliding {
+    position: absolute;
+    animation: slide 3s linear infinite;
+  }
+
+  .delay1 {
+    animation-delay: 0.5s;
+  }
+  .delay2 {
+    animation-delay: 1s;
+  }
+  .delay3 {
+    animation-delay: 1.5s;
+  }
+
+  @keyframes slide {
+    0% {
+      opacity: 0;
+      transform: translateX(3em);
+    }
+    20% {
+      transform: translateX(1.5em);
+    }
+    33% {
+      opacity: 0;
+    }
+    80% {
+      opacity: 1;
+      transform: translateX(0em);
+    }
+    100% {
+      opacity: 0;
+      transform: translateX(0em);
+    }
+  }
+</style>

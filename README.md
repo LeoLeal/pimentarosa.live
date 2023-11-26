@@ -1,6 +1,6 @@
 # Pimentarosa public Website
 
-[![Contentful Deploy Trigger](https://github.com/LeoLeal/pimentarosa.live/actions/workflows/contentful-publish.yml/badge.svg)](https://github.com/LeoLeal/pimentarosa.live/actions/workflows/contentful-publish.yml) [![Deploy Astro site to Pages](https://github.com/LeoLeal/pimentarosa.live/actions/workflows/astro.yml/badge.svg)](https://github.com/LeoLeal/pimentarosa.live/actions/workflows/astro.yml)
+[![Contentful Deploy Trigger](https://github.com/LeoLeal/pimentarosa.live/actions/workflows/contentful-publish.yml/badge.svg)](https://github.com/LeoLeal/pimentarosa.live/actions/workflows/contentful-publish.yml) [![Deploy Astro site to Pages](https://github.com/LeoLeal/pimentarosa.live/actions/workflows/astro.yml/badge.svg)](https://github.com/LeoLeal/pimentarosa.live/actions/workflows/astro.yml) [![CodeQL](https://github.com/LeoLeal/pimentarosa.live/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/LeoLeal/pimentarosa.live/actions/workflows/github-code-scanning/codeql)
 
 This a simple website for the Twitch Partner and Streamer Pimentarosa, build with Astro (in SSG mode) consuming contents from contentful headless CMS supporting internationalization (i18n) for Brazilian Portuguese and English.
 

@@ -1,54 +1,12 @@
-# Astro Starter Kit: Basics
+# Pimentarosa public Website
 
-```sh
-npm create astro@latest -- --template basics
-```
+[![Contentful Deploy Trigger](https://github.com/LeoLeal/pimentarosa.live/actions/workflows/contentful-publish.yml/badge.svg)](https://github.com/LeoLeal/pimentarosa.live/actions/workflows/contentful-publish.yml) [![Deploy Astro site to Pages](https://github.com/LeoLeal/pimentarosa.live/actions/workflows/astro.yml/badge.svg)](https://github.com/LeoLeal/pimentarosa.live/actions/workflows/astro.yml)
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
+This a simple website for the Twitch Partner and Streamer Pimentarosa, build with Astro (in SSG mode) consuming contents from contentful headless CMS supporting internationalization (i18n) for Brazilian Portuguese and English.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+![https://pbs.twimg.com/profile_images/1632785343433908224/SnMGR19O_400x400.png](https://avatars.githubusercontent.com/u/44914786?s=200&v=4)
+![alt Contenftul](https://avatars.githubusercontent.com/u/472182?s=200&v=4)
 
-![just-the-basics](https://github.com/withastro/astro/assets/2244813/a0a5533c-a856-4198-8470-2d67b1d7c554)
+## 👀 Want to learn Astro?
 
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src/
-│   ├── components/
-│   │   └── Card.astro
-│   ├── layouts/
-│   │   └── Layout.astro
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
-
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+Feel free to check [documentation](https://docs.astro.build) or jump into the [Discord server](https://astro.build/chat).

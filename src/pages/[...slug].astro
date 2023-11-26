@@ -59,13 +59,13 @@ const sections = sectionsCollection.items;
       sections.map((section, index) => {
         switch (section['__typename']) {
           case 'PimentarosaLiveSectionPageHero':
-            return <PageHero {...section} />;
+            return <PageHero {...section} locale={Astro.props['locale']} />;
           case 'PimentarosaLiveSectionSocialMedia':
-            return <SocialMedia {...section} />;
+            return <SocialMedia {...section} locale={Astro.props['locale']} />;
           case 'PimentarosaLiveSectionProjects':
-            return <Projects {...section} />;
+            return <Projects {...section} locale={Astro.props['locale']} />;
           case 'PimentarosaLiveSectionContact':
-            return <Contact {...section} />;
+            return <Contact {...section} locale={Astro.props['locale']} />;
           default:
             console.log(section['__typename']);
             return <section class="parallax-section">NYI</section>;

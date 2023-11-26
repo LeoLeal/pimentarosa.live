@@ -8,6 +8,29 @@ const sectionId = Astro.props['__typename'];
 const socialMediaCollection = Astro.props['socialMediaCollection'].items;
 const primaryLabel = Astro.props['primaryLabel'];
 const demographicsLabel = Astro.props['demographicsLabel'];
+
+const abreviateNumber = (n) => {
+  if (n < 1e5) return n.toLocaleString(Astro.props['locale'], {
+      maximumFractionDigits: 2
+    });
+  if (n >= 1e5 && n < 1e6)
+    return  (n / 1e3).toLocaleString(Astro.props['locale'], {
+      maximumFractionDigits: 2
+    }) + "K";
+  if (n >= 1e6 && n < 1e9)
+    return  (n / 1e6).toLocaleString(Astro.props['locale'], {
+      maximumFractionDigits: 2
+    }) + "M";
+  if (n >= 1e9 && n < 1e12)
+    return (n / 1e9).toLocaleString(Astro.props['locale'], {
+      maximumFractionDigits: 2
+    }) + "B";
+  if (n >= 1e12) 
+    return (n / 1e12).toLocaleString(Astro.props['locale'], {
+      maximumFractionDigits: 2
+    }) + "T";
+
+};
 ---
 
 <script>
@@ -52,7 +75,7 @@ const demographicsLabel = Astro.props['demographicsLabel'];
             socialMedia?.statsCollection?.items?.map?.(stat => (
               <figure>
                 <label>{stat.label}:</label>
-                {stat.value}{stat.unit}
+                {abreviateNumber(stat.value)}{stat.unit}
               </figure>
             ))
           }

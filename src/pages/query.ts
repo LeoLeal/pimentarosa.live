@@ -27,7 +27,7 @@ query GetPages($locale: String, $path: String = "/") {
       path
       sectionsCollection(limit: 10) {
         items {
-        	... PageHeroFragment
+          ... PageHeroFragment
           ... SocialMediaFragment
           ... ProjectsFragment
           ... ContactFragment

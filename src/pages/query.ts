@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client/core';
-import PageHeroFragment from '../components/page-hero/query';
-import SocialMediaFragment from '../components/social-media/query';
-import ProjectsFragment from '../components/projects/query';
-import ContactFragment from '../components/contact/query';
+import PageHeroFragment from '../components/sections/page-hero/query';
+import SocialMediaFragment from '../components/sections/social-media/query';
+import ProjectsFragment from '../components/sections/projects/query';
+import ContactFragment from '../components/sections/contact/query';
 
 export const pageQuery = gql`
 ${PageHeroFragment}

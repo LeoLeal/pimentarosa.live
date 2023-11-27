@@ -1,4 +1,6 @@
 ---
+import LocaleSelector from '../components/common/locale-selector/LocaleSelector.astro';
+
 interface Props {
   locale: 'en' | 'pt-BR';
   title: string;
@@ -23,6 +25,7 @@ interface Props {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   </head>
   <body>
+    <LocaleSelector locale={Astro.props['locale']} />
     <slot />
   </body>
 </html>

@@ -1,13 +1,14 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Navigation from '../components/Navigation.astro';
+import Navigation from '../components/common/navigation/Navigation.astro';
 import client from '../lib/graphql';
 import { pageQuery, pathsQuery } from './query';
 import getLocales from '../lib/locales';
-import PageHero from '../components/page-hero/PageHero.astro';
-import SocialMedia from '../components/social-media/SocialMedia.astro';
-import Projects from '../components/projects/Projects.astro';
-import Contact from '../components/contact/Contact.astro';
+import PageHero from '../components/sections/page-hero/PageHero.astro';
+import SocialMedia from '../components/sections/social-media/SocialMedia.astro';
+import Projects from '../components/sections/projects/Projects.astro';
+import Contact from '../components/sections/contact/Contact.astro';
+import LocaleSelector from '../components/common/locale-selector/LocaleSelector.astro';
 
 export async function getStaticPaths() {
   const pathsResponse = await client.query({
@@ -53,7 +54,7 @@ const sections = sectionsCollection.items;
 ---
 
 <Layout {...metadata} locale={Astro.props['locale']}>
-  <Navigation sections={sections} />
+  <Navigation sections={sections} locale={Astro.props['locale']} />
   <main class="parallax-container">
     {
       sections.map((section, index) => {

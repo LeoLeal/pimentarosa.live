@@ -1,6 +1,8 @@
----
+---import LocaleSelector from '../locale-selector/LocaleSelector.astro';
+
 interface Props {
   sections: { [key: string]: any }[];
+  locale: string
 }
 ---
 
@@ -9,7 +11,7 @@ interface Props {
     document.querySelectorAll(`nav > a`).forEach((item) => {
       item.classList.remove('selected');
     });
-    document.querySelector(`nav > a.${anchorName}`).classList.add('selected');
+    document.querySelector(`nav > a.${anchorName}`)?.classList.add('selected');
   }
 
   function initNavigation() {
@@ -37,7 +39,7 @@ interface Props {
   }
 
   window['goTo'] = function goTo(anchorName) {
-    document.querySelector(`#${anchorName}`).scrollIntoView({
+    document.querySelector(`#${anchorName}`)?.scrollIntoView({
       behavior: 'smooth',
     });
   };

@@ -11,14 +11,14 @@ const label = Astro.props['locale'] === 'en' ? 'Português (Brasil)' : 'English'
 
 <a href={getAbsoluteLocaleUrl(locale, '/')}>
   <label>{label}</label>
-  <img src={`/images/${locale}.svg`} />
+  <img src={`/images/${locale}.svg`} alt={locale} />
 </a>
 
 <style>
   a {
     position: fixed;
     z-index: 999;
-    top: 20px;
+    bottom: 20px;
     right: 28px;
     display: flex;
     align-items: center;
@@ -52,6 +52,13 @@ const label = Astro.props['locale'] === 'en' ? 'Português (Brasil)' : 'English'
     transition: all 100ms ease-out;
   }
 
+  @media screen and (hover: none) {
+    a img {
+      outline: 3px solid #fff6;
+      transition: all 100ms ease-out;
+    }
+  }
+
   a label {
     position: relative;
     opacity: 0;
@@ -76,5 +83,12 @@ const label = Astro.props['locale'] === 'en' ? 'Português (Brasil)' : 'English'
   a:hover label {
     opacity: 1;
     max-width: 125px;
+  }
+
+  @media screen and (hover: none) {
+    a label {
+      opacity: 1;
+      max-width: 125px;
+    }
   }
 </style>

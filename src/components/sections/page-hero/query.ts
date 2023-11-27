@@ -9,7 +9,6 @@ fragment PageHeroFragment on PimentarosaLiveSectionPageHero {
   background {
     title
     description
-    contentType
     url
   }
   readMoreLabel

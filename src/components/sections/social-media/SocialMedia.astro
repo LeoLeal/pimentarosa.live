@@ -48,12 +48,11 @@ const abreviateNumber = (n) => {
       socialMediaCollection.map(socialMedia => (
         <a 
           target="_blank" 
-          aria-label={socialMedia.name} 
           onclick={`selectSocial('${sectionId}', '${socialMedia.name}', event)`} 
           style={`--background: ${socialMedia.background}`} href={`${socialMedia.url}`}
         >
           {socialMedia.primary ? <span>{primaryLabel}</span> : null}
-          <img src={`${socialMedia.logo.url}`} alt={`${socialMedia.logo.title}`} />
+          <img src={`${socialMedia.logo.url}`} alt={`${socialMedia.logo.title}`} aria-label={socialMedia.name} />
         </a>
       ))
     }
@@ -105,7 +104,7 @@ const abreviateNumber = (n) => {
   }
 </section>
 
-<style is:inline>
+<style is:global>
   #PimentarosaLiveSectionSocialMedia section.text p:last-of-type {
     margin-bottom: 0;
   }

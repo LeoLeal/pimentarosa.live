@@ -1,5 +1,7 @@
-import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client/core';
+import { ApolloClient, InMemoryCache } from '@apollo/client/core';
 import { setContext } from '@apollo/client/link/context';
+
+import { createHttpLink } from '@apollo/client/link/http';
 
 const httpLink = createHttpLink({
   credentials: 'same-origin',

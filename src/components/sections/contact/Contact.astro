@@ -8,7 +8,7 @@ interface Props {
 
 <section
   class="parallax-section"
-  style={`--background-image: url(${Astro.props['backgroundImage']['url']})`}
+  style={`--background-image: url(${Astro.props['backgroundImage']['url']}); --background-image-webp: url(${Astro.props['backgroundImage']['url']}?fm=webp)`}
   id={Astro.props['__typename']}
 >
   <h2 set:html={Astro.props['title']} />
@@ -43,6 +43,21 @@ interface Props {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+  }
+
+  @supports(background-image: var(--background-image-webp)) {
+    section {
+      position: relative;
+      background: var(--background-image-webp) center center no-repeat;
+      background-size: cover;
+      background-attachment: fixed;
+      padding: 3em;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
   }
 
   h2 {

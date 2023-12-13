@@ -15,7 +15,10 @@ const projects = [...items].reverse();
         projects.map(project => (
           <li>
             <figure>
-              <img src={project.image.url} alt={project.image.description} title={project.image.title} />
+              <picture class="bg-parallax" title={project.image.title}>
+                <source srcset={`${project.image.url}?fm=webp`} />
+                <img src={project.image.url} alt={project.image.description} />
+              </picture>
               <figcaption>{project.title}</figcaption>
             </figure>
             <p>{project.role}</p>

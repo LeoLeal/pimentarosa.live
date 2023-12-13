@@ -9,11 +9,13 @@ interface Props {
 ---
 
 <header class="parallax-section" id={Astro.props["__typename"]}>
-  <img
-    src={Astro.props["background"]["url"]}
-    class="bg-parallax"
-    alt={Astro.props["background"]["description"]}
-  />
+  <picture class="bg-parallax">
+    <source srcset={`${Astro.props["background"]["url"]}?fm=webp`} />
+    <img
+      src={`${Astro.props["background"]["url"]}`}
+      alt={Astro.props["background"]["description"]}
+    />
+  </picture>
   <div class="bg-parallax content">
     <div class="container">
       <img src="/images/pimenta.svg" class="logo" alt="Logotipo" />
@@ -89,11 +91,17 @@ interface Props {
 
   .bg-parallax {
     position: absolute;
+    display: flex;
     width: 100vw;
     height: 100vh;
-    object-fit: cover;
     transform: translateZ(-10px) scale(2.1);
     z-index: -1;
+  }
+
+  picture.bg-parallax img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
   }
 
   .bg-parallax + .bg-parallax {
